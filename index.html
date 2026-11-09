@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" data-product="dchart">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dchart — Query in. Publication-ready chart out.</title>
+<meta name="description" content="dchart is a local SQL editor and chart builder. It runs DuckDB in-process, draws with Vega-Lite and styles every chart for publication by default. One Linux binary, works offline, your data never leaves your machine.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cuiqanalytics.github.io/dchart/">
+<meta property="og:title" content="dchart — Query in. Publication-ready chart out.">
+<meta property="og:description" content="A local SQL editor and chart builder on DuckDB and Vega-Lite. 14 chart types, legible labels, annotations, and exports to PNG, SVG, Parquet, Excel and asql.">
+<meta property="og:image" content="https://cuiqanalytics.github.io/dchart/media/app-stacked.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="brand/icon-dchart.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="brand/brand.css?v=2">
+<script src="brand/brand.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="cq-bar">
+  <div class="cq-bar-in">
+    <a class="cq-logo" href="https://www.cuiqanalytics.com/"><img src="brand/icon-cuiq.svg" alt="" width="18" height="18"><span>cuiq<b>analytics</b></span></a>
+    <nav class="cq-products" aria-label="cuiqanalytics tools">
+      <a href="https://cuiqanalytics.github.io/rgen/"><span class="dot dot-rgen" aria-hidden="true"></span>rgen</a>
+      <a href="https://cuiqanalytics.github.io/qdata/"><span class="dot dot-qdata" aria-hidden="true"></span>qdata</a>
+      <a href="https://www.asql.dev/"><span class="dot dot-asql" aria-hidden="true"></span>asql</a>
+      <a href="https://cuiqanalytics.github.io/dchart/" aria-current="page"><span class="dot dot-dchart" aria-hidden="true"></span>dchart</a>
+    </nav>
+  </div>
+</div>
+<header class="site-header">
+  <nav class="nav" aria-label="Main">
+    <a href="#top" class="brand" aria-label="dchart home"><img src="brand/icon-dchart.svg" alt="" width="28" height="28">dchart</a>
+    <div class="nav-links">
+      <a href="#editor">Editor</a>
+      <a href="#charts">Charts</a>
+      <a href="#labels">Labels</a>
+      <a href="#asql">asql</a>
+      <a href="#exports">Exports</a>
+      <a href="#local">Local</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <button class="theme-toggle" type="button" aria-label="Switch color theme" title="Switch color theme">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z" fill="currentColor"/></svg>
+    </button>
+    <a href="#install" class="btn btn-solid nav-cta">Install</a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section id="top" class="hero">
+    <div class="hero-copy">
+      <h1>Query in. <em>Publication-ready</em> chart out.</h1>
+      <p class="lede">dchart is a SQL editor and chart builder that runs in your browser, on your machine. Write a query against your CSV, Parquet and JSON files, then pick one of 14 chart types. The chart comes out styled for a report or a paper: a proper title, quiet gridlines and labels you can read. DuckDB runs inside the binary, so there's no database to set up and nothing leaves your laptop.</p>
+
+      <div id="install" class="install">
+        <div class="cmd">
+          <code><span class="sigil" aria-hidden="true">$</span>curl -fsSL https://cuiqanalytics.github.io/dchart/install.sh | sh</code>
+          <button class="copy" data-copy="curl -fsSL https://cuiqanalytics.github.io/dchart/install.sh | sh">Copy</button>
+        </div>
+        <div class="cmd">
+          <code><span class="sigil" aria-hidden="true">$</span>dchart --folder ~/.local/lib/dchart/examples/data</code>
+          <button class="copy" data-copy="dchart --folder ~/.local/lib/dchart/examples/data">Copy</button>
+        </div>
+      </div>
+      <p class="install-note">Free. One Linux binary (x86-64); on Windows, run it in WSL. No account, no telemetry, works offline. Then open <code>http://localhost:4322</code>.</p>
+    </div>
+
+    <figure class="hero-shot">
+      <img src="media/app-stacked.png" alt="The dchart window: example files in the sidebar, a SQL query in the editor, and a stacked bar chart of revenue by region and channel with a value label in each segment" width="1500" height="1000">
+      <figcaption>The bundled example data: a query, the Style tab, and a stacked bar chart with its labels set in white or dark ink to suit each segment.</figcaption>
+    </figure>
+  </section>
+
+  <section id="editor" class="wrap split">
+    <div class="split-text">
+      <p class="eyebrow">The editor</p>
+      <h2>A SQL console that knows your files</h2>
+      <p>Start dchart with <code>--folder</code> and every data file under it shows up in the sidebar, subfolders included. Click one to preview it, or query it by name.</p>
+      <ul class="ticks">
+        <li><b>Run what's under the cursor.</b> Ctrl+Enter runs one statement, or the selection. Long queries show their progress and can be stopped.</li>
+        <li><b>Globs for folders of files.</b> A folder of CSVs gets a <code>sales/*.csv</code> entry that reads them as one table, lining up columns by name.</li>
+        <li><b>Parameters.</b> Write <code>$region</code> and an input appears above the editor. A saved chart keeps its values.</li>
+        <li><b>Tables that last.</b> With <code>--db file.duckdb</code>, the tables you create are still there next time.</li>
+        <li><b>Autocomplete, history and errors that point at the line.</b></li>
+      </ul>
+    </div>
+    <div class="split-demo">
+      <figure class="shot">
+        <img src="media/app-params.png" alt="dchart with a Parameters bar above the editor holding $region = West and $since = 2025-01-01, and a weekly revenue line chart below" width="1500" height="1000" loading="lazy">
+        <figcaption>A query with two parameters. Change a value, press Enter, and the chart redraws.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="charts" class="wrap">
+    <p class="eyebrow">The chart builder</p>
+    <h2>Fourteen chart types, filled in from your columns</h2>
+    <p class="section-lede">Run a query and dchart picks a chart type and fills the fields from your column names and types. Switch types and the fields you chose come along where they fit. Every setting has undo and redo, and the builder remembers where you left off.</p>
+    <ul class="kinds">
+      <li><svg viewBox="0 0 26 20" fill="currentColor" aria-hidden="true"><rect x="3" y="10" width="5" height="8"/><rect x="10.5" y="4" width="5" height="14"/><rect x="18" y="7" width="5" height="11"/></svg><b>Bar</b><span>Comparisons, stacked by a second field</span></li>
+      <li><svg viewBox="0 0 26 20" fill="currentColor" aria-hidden="true"><rect x="2" y="8" width="3.5" height="10"/><rect x="5.5" y="4" width="3.5" height="14" opacity=".45"/><rect x="11" y="6" width="3.5" height="12"/><rect x="14.5" y="10" width="3.5" height="8" opacity=".45"/><rect x="20" y="3" width="3.5" height="15"/></svg><b>Grouped</b><span>Side-by-side bars per category</span></li>
+      <li><svg viewBox="0 0 26 20" fill="currentColor" aria-hidden="true"><polyline fill="none" stroke="currentColor" stroke-width="2" points="2,16 8,9 14,12 24,3"/></svg><b>Line</b><span>Series over time, with end labels</span></li>
+      <li><svg viewBox="0 0 26 20" fill="currentColor" aria-hidden="true"><path d="M2 12L8 6L14 8L24 1V9L14 15L8 13L2 18Z" opacity=".3"/><polyline fill="none" stroke="currentColor" stroke-width="2" points="2,15 8,10 14,12 24,5"/></svg><b>Trend + CI</b><span>A line with its confidence band</span></li>
+      <li><svg viewBox="0 0 26 20" fill="currentColor" aria-hidden="true"><path d="M2 18V14L8 8L14 11L24 3V18Z" opacity=".35"/><polyline fill="none" stroke="currentColor" stroke-width="2" points="2,14 8,8 14,11 24,3"/></svg><b>Area</b><span>Stacked totals over time</span></li>
+      <li><svg viewBox="0 0 26 20" fill="currentColor" aria-hidden="true"><circle cx="5" cy="14" r="2"/><circle cx="10" cy="9" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="22" cy="10" r="2"/></svg><b>Scatter</b><span>Two measures, with size and colour</span></li>
+      <li><svg viewBox="0 0 26 20" fill="currentColor" aria-hidden="true"><rect x="3" y="2" width="6" height="7"/><rect x="10" y="2" width="6" height="7" opacity=".4"/><rect x="17" y="2" width="6" height="7" opacity=".7"/><rect x="3" y="11" width="6" height="7" opacity=".55"/><rect x="10" y="11" width="6" height="7"/><rect x="17" y="11" width="6" height="7" opacity=".25"/></svg><b>Heatmap</b><span>Two categories and a value per cell</span></li>
+      <li><svg viewBox="0 0 26 20" fill="currentColor" aria-hidden="true"><circle cx="13" cy="10" r="8" opacity=".35"/><path d="M13 10V2A8 8 0 0 1 20.9 11.3Z"/></svg><b>Pie</b><span>Parts of a whole, kept to a few</span></li>
+      <li><svg viewBox="0 0 26 20" fill="currentColor" aria-hidden="true"><rect x="3" y="12" width="4" height="6"/><rect x="7" y="6" width="4" height="12"/><rect x="11" y="3" width="4" height="15"/><rect x="15" y="8" width="4" height="10"/><rect x="19" y="13" width="4" height="5"/></svg><b>Histogram</b><span>The shape of one measure</span></li>
+      <li><svg viewBox="0 0 26 20" fill="currentColor" aria-hidden="true"><line x1="13" y1="2" x2="13" y2="18" stroke="currentColor" stroke-width="1.5"/><rect x="8" y="6" width="10" height="8"/><line x1="8" y1="10" x2="18" y2="10" stroke="var(--surface)" stroke-width="1.5"/></svg><b>Box</b><span>Spread and outliers by group</span></li>
+      <li><svg viewBox="0 0 26 20" fill="currentColor" aria-hidden="true"><rect x="2" y="4" width="4" height="14"/><rect x="7" y="4" width="4" height="5" opacity=".55"/><rect x="12" y="9" width="4" height="4" opacity=".55"/><rect x="17" y="2" width="4" height="7" opacity=".55"/><rect x="22" y="2" width="3" height="16"/></svg><b>Waterfall</b><span>Changes to a running total</span></li>
+      <li><svg viewBox="0 0 26 20" fill="currentColor" aria-hidden="true"><rect x="3" y="10" width="4" height="8" opacity=".45"/><rect x="11" y="6" width="4" height="12" opacity=".45"/><rect x="19" y="9" width="4" height="9" opacity=".45"/><polyline fill="none" stroke="currentColor" stroke-width="2" points="5,8 13,3 21,6"/></svg><b>Combo</b><span>Bars and a line on two axes</span></li>
+      <li><svg viewBox="0 0 26 20" fill="currentColor" aria-hidden="true"><line x1="1" y1="10" x2="25" y2="10" stroke="currentColor" stroke-width="1"/><rect x="3" y="3" width="4" height="7"/><rect x="9" y="5" width="4" height="5"/><rect x="15" y="10" width="4" height="4" opacity=".5"/><rect x="21" y="10" width="4" height="8" opacity=".5"/></svg><b>Deviation</b><span>Above and below zero, sorted</span></li>
+      <li><svg viewBox="0 0 26 20" fill="currentColor" aria-hidden="true"><rect x="1" y="3" width="24" height="14" opacity=".2"/><rect x="1" y="3" width="15" height="14" opacity=".2"/><rect x="1" y="8" width="18" height="4"/><rect x="20" y="5" width="2" height="10"/></svg><b>Bullet</b><span>Actual against target and bands</span></li>
+    </ul>
+
+    <figure class="gallery" data-tabs aria-label="Charts made from the bundled example data">
+      <div class="tabs" role="tablist" aria-label="Chart">
+        <button role="tab" id="tab-g1" aria-controls="pane-g1" aria-selected="true">Waterfall</button>
+        <button role="tab" id="tab-g2" aria-controls="pane-g2" aria-selected="false" tabindex="-1">Trend + CI</button>
+        <button role="tab" id="tab-g3" aria-controls="pane-g3" aria-selected="false" tabindex="-1">Heatmap</button>
+        <button role="tab" id="tab-g4" aria-controls="pane-g4" aria-selected="false" tabindex="-1">Combo</button>
+        <button role="tab" id="tab-g5" aria-controls="pane-g5" aria-selected="false" tabindex="-1">Bullet</button>
+        <button role="tab" id="tab-g6" aria-controls="pane-g6" aria-selected="false" tabindex="-1">Area</button>
+      </div>
+      <div role="tabpanel" id="pane-g1" aria-labelledby="tab-g1">
+        <img src="media/c-waterfall.png" alt="Waterfall chart from revenue of 1,200 down to net income of 360, with grey totals, red decreases and a green increase" width="1806" height="1026" loading="lazy">
+        <p>A profit-and-loss bridge. Totals come from an <code>is_total</code> column, or from the first and last rows. Dotted connectors carry the running total from bar to bar.</p>
+      </div>
+      <div role="tabpanel" id="pane-g2" aria-labelledby="tab-g2" hidden>
+        <img src="media/c-trend.png" alt="Three monthly lines of average order value, one per sales channel, each with a shaded 95% confidence band" width="1806" height="1040" loading="lazy">
+        <p>Average order value per channel with its 95% interval. Bounds can come from two columns, or dchart computes them from the raw rows: CI of the mean, standard error, standard deviation or IQR.</p>
+      </div>
+      <div role="tabpanel" id="pane-g3" aria-labelledby="tab-g3" hidden>
+        <img src="media/c-heatmap.png" alt="Heatmap of page events by hour of day and weekday, busiest on weekday afternoons, with the count printed in each cell" width="1806" height="1062" loading="lazy">
+        <p>Page events by hour and weekday. Each cell's count is printed in white or dark ink, whichever reads better on that cell's colour.</p>
+      </div>
+      <div role="tabpanel" id="pane-g4" aria-labelledby="tab-g4" hidden>
+        <img src="media/c-combo.png" alt="Monthly revenue as bars on the left axis with margin as a line on a second axis on the right" width="1836" height="980" loading="lazy">
+        <p>Revenue as bars and margin as a line, each on its own axis. Name the columns <code>bar</code> and <code>line</code> and it's picked automatically.</p>
+      </div>
+      <div role="tabpanel" id="pane-g5" aria-labelledby="tab-g5" hidden>
+        <img src="media/c-bullet.png" alt="Bullet chart of five KPIs, each a bar for the actual value with a tick for the goal over grey bands" width="1836" height="968" loading="lazy">
+        <p>KPIs against their goals: the bar is the actual value, the tick the target, and the grey bands are the ranges you set.</p>
+      </div>
+      <div role="tabpanel" id="pane-g6" aria-labelledby="tab-g6" hidden>
+        <img src="media/c-area.png" alt="Stacked area chart of monthly units by region from 2023 to 2025" width="1836" height="978" loading="lazy">
+        <p>Three years of units by region, read from <code>sales/*.csv</code>: three yearly files queried as one table.</p>
+      </div>
+    </figure>
+  </section>
+
+  <section id="labels" class="labels">
+    <div class="wrap">
+      <p class="eyebrow">Publication theme</p>
+      <h2>Labels you can read on any bar</h2>
+      <p class="section-lede">A value label is only useful if it's legible. dchart measures each bar and segment as the chart draws: a label goes inside when it fits, in white or dark ink by contrast with the colour behind it, and moves outside when it doesn't. That keeps working when you change the colour scheme.</p>
+      <div class="label-grid">
+        <figure>
+          <img src="media/c-negative.png" alt="Bar chart of eight regions against plan, with negative bars labelled inside their ends in white" width="1836" height="980" loading="lazy">
+          <figcaption><b>Negative bars</b> keep their labels inside the bar's end, clear of the category axis. A bar too short for its label puts it just past the end.</figcaption>
+        </figure>
+        <figure>
+          <img src="media/c-stacked.png" alt="Stacked bars with white labels on the blue segments and dark labels on the orange and red segments" width="1806" height="1026" loading="lazy">
+          <figcaption><b>Stacked segments</b> get their labels in the middle, and only where there's room for them.</figcaption>
+        </figure>
+        <figure>
+          <img src="media/c-waterfall-dark.png" alt="The waterfall chart on a dark theme, with labels still legible on every bar" width="1806" height="1056" loading="lazy">
+          <figcaption><b>Any theme.</b> The same waterfall on the dark theme. Labels outside the bars switch to a light ink.</figcaption>
+        </figure>
+        <div>
+          <h3>And the rest of the publication look</h3>
+          <ul class="ticks">
+            <li>A left-aligned title over a muted subtitle, with padding all round.</li>
+            <li>Horizontal axis labels and humanized titles: <code>deal_size</code> becomes "Deal size".</li>
+            <li>Many or long categories turn into horizontal bars on their own.</li>
+            <li><b>Reference lines</b> at a value, the mean or the median, and shaded bands.</li>
+            <li><b>Annotations:</b> press A, click a point, type. Drag the box clear of the data.</li>
+            <li>Prefer another look? The vega-themes set is one menu away.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="asql" class="wrap split split-flip">
+    <div class="split-text">
+      <p class="eyebrow">Works with asql</p>
+      <h2>Explore in dchart. Publish with asql.</h2>
+      <p>Once a chart looks right, copy it as an <a href="https://www.asql.dev/">asql</a> chart block and paste it into a report. The fields, titles, labels, intervals, reference lines and annotations carry over as asql keys.</p>
+      <p>Anything asql has no key for is listed on a <code>-- note:</code> line instead of being dropped silently, along with any column aliases asql needs to read the chart the same way.</p>
+    </div>
+    <div class="split-demo">
+      <pre class="terminal" aria-label="An asql chart block copied from dchart"><code><span class="t-a">-- @chart: trend</span>
+<span class="t-a">-- title:</span> Average order value
+<span class="t-a">-- subtitle:</span> Monthly mean with its 95% interval, $
+<span class="t-a">-- @x:</span> date
+<span class="t-a">-- @y:</span> value
+<span class="t-a">-- @series:</span> series
+<span class="t-a">-- show-points:</span> false
+<span class="t-a">-- ci:</span> ci_low | ci_high
+<span class="t-a">-- height:</span> 360px
+
+<span class="t-k">SELECT</span> date_trunc(<span class="t-s">'month'</span>, order_date) <span class="t-k">AS</span> date, channel <span class="t-k">AS</span> series,
+       avg(amount) <span class="t-k">AS</span> value,
+       avg(amount) - 1.96 * stddev(amount) / sqrt(count(*)) <span class="t-k">AS</span> ci_low,
+       avg(amount) + 1.96 * stddev(amount) / sqrt(count(*)) <span class="t-k">AS</span> ci_high
+<span class="t-k">FROM</span> <span class="t-s">'orders.csv'</span> <span class="t-k">GROUP BY ALL ORDER BY</span> date;</code></pre>
+      <p class="install-note">Copied from dchart with Export ▾ → asql chart block, for the Trend + CI chart above.</p>
+    </div>
+  </section>
+
+  <section id="exports" class="wrap">
+    <p class="eyebrow">Getting it out</p>
+    <h2>Every chart and every row, in the format you need</h2>
+    <div class="features">
+      <div><h3>Images</h3><p>PNG and SVG, as a download or straight to the clipboard. <b>Copy PNG</b> sits in the toolbar for pasting into a doc or a slide.</p></div>
+      <div><h3>All the rows</h3><p>Results export as CSV, Parquet, Excel or JSON lines. "All rows" runs the query again through DuckDB's <code>COPY</code>, so the row limit doesn't apply.</p></div>
+      <div><h3>The spec</h3><p>The Vega-Lite spec with its data and theme included, to drop into a web page or notebook. Or edit the JSON and keep working on it as a custom spec.</p></div>
+      <div><h3>Saved charts</h3><p>Each saved chart keeps its query, settings, parameters and a thumbnail. Rename, filter, and share them as one JSON file.</p></div>
+      <div><h3>asql blocks</h3><p>A chart becomes an <code>-- @chart:</code> block for an asql report, with a note on anything that doesn't carry over.</p></div>
+      <div><h3>Example data included</h3><p>The download ships a folder of made-up data and a saved chart for every chart type. Import <code>charts.json</code> to see them all.</p></div>
+    </div>
+  </section>
+
+  <section id="local" class="local">
+    <div class="wrap">
+      <h2>Your data stays on your machine</h2>
+      <p class="section-lede">dchart is a single binary with DuckDB, Vega-Lite and the editor built in. It needs no network, no account and no server beyond the one it runs on localhost.</p>
+      <div class="features">
+        <div><h3>Localhost only</h3><p>It listens on <code>localhost</code>, and its API answers only its own page. Other sites open in your browser can't run SQL through it.</p></div>
+        <div><h3>Works offline</h3><p>Every library is bundled, so it works on a plane and behind a firewall. Your charts are kept in <code>~/.config/dchart</code>.</p></div>
+        <div><h3>DuckDB inside</h3><p>Query CSV, Parquet and JSON files directly, or a <code>.duckdb</code> database. One connection lasts the session, so tables you create stay around.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="wrap faq">
+    <h2>Questions</h2>
+    <div class="faq-list">
+      <details><summary>What do I need to run it?</summary><p>Linux on x86-64, or Windows with WSL, and a web browser. The install script puts dchart and its DuckDB library in <code>~/.local/lib/dchart</code> and links <code>~/.local/bin/dchart</code>. Nothing else to install.</p></details>
+      <details><summary>Does it need internet access?</summary><p>No. The editor, Vega-Lite and DuckDB are all inside the download. The only exception is a DuckDB extension you install yourself, such as <code>INSTALL excel;</code> for Excel export.</p></details>
+      <details><summary>Where are my charts saved?</summary><p>In <code>~/.config/dchart/charts.json</code>, or under <code>DCHART_CONFIG_DIR</code> if you set it. Export them all to one file to share them or move them to another machine.</p></details>
+      <details><summary>Can I keep my tables between sessions?</summary><p>Yes. Start dchart with <code>--db file.duckdb</code> and the tables you create are saved in that file. Without it, DuckDB runs in memory and your files are only read.</p></details>
+      <details><summary>How does it relate to asql?</summary><p>They work together. dchart is for exploring one chart at a time, interactively. asql builds a whole report from an annotated <code>.sql</code> file. Copy a dchart chart as an asql block and paste it into the report.</p></details>
+      <details><summary>Can I go beyond the builder?</summary><p>Yes. The JSON view shows the Vega-Lite spec behind every chart. Edit it and apply it as a custom spec, with the full Vega-Lite grammar available.</p></details>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <p class="brand"><img src="brand/icon-dchart.svg" alt="" width="28" height="28">dchart</p>
+      <p class="footer-note">A local SQL editor and chart builder. Linux binary.</p>
+    </div>
+    <div class="cmd">
+      <code><span class="sigil" aria-hidden="true">$</span>curl -fsSL https://cuiqanalytics.github.io/dchart/install.sh | sh</code>
+      <button class="copy" data-copy="curl -fsSL https://cuiqanalytics.github.io/dchart/install.sh | sh">Copy</button>
+    </div>
+    <nav class="footer-links" aria-label="Resources">
+      <a href="https://github.com/cuiqanalytics/dchart">GitHub</a>
+      <a href="https://github.com/cuiqanalytics/dchart#readme">README</a>
+      <a href="https://github.com/cuiqanalytics/dchart/blob/main/QUICK_REFERENCE.md">Quick reference</a>
+      <a href="https://github.com/cuiqanalytics/dchart/tree/main/examples">Examples</a>
+      <a href="https://github.com/cuiqanalytics/dchart/blob/main/LICENSE">License</a>
+    </nav>
+  </div>
+  <div class="wrap cq-footer">
+    <div>
+      <a class="cq-logo" href="https://www.cuiqanalytics.com/"><img src="brand/icon-cuiq.svg" alt="" width="22" height="22"><span>cuiq<b>analytics</b></span></a>
+      <p class="cq-footer-note">Small, sharp command-line tools for data work. Local-first, built on DuckDB.</p>
+    </div>
+    <a class="cq-prod" href="https://cuiqanalytics.github.io/rgen/"><img src="brand/icon-rgen.svg" alt="" width="28" height="28"><b>rgen</b><span>Realistic test data from one command.</span></a>
+    <a class="cq-prod" href="https://cuiqanalytics.github.io/qdata/"><img src="brand/icon-qdata.svg" alt="" width="28" height="28"><b>qdata</b><span>SQL pipelines on your laptop.</span></a>
+    <a class="cq-prod" href="https://www.asql.dev/"><img src="brand/icon-asql.svg" alt="" width="28" height="28"><b>asql</b><span>Write SQL. Get a dashboard.</span></a>
+    <a class="cq-prod" href="https://cuiqanalytics.github.io/dchart/" aria-current="page"><img src="brand/icon-dchart.svg" alt="" width="28" height="28"><b>dchart</b><span>Query in. Publication-ready chart out.</span></a>
+  </div>
+  <p class="wrap copyright">© 2026 cuiqanalytics. Your queries and data are yours.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

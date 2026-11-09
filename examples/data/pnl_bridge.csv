@@ -1,0 +1,7 @@
+step,label,value,is_total
+1,Revenue,1200,true
+2,Cost of sales,-480,false
+3,Operating costs,-310,false
+4,Other income,45,false
+5,Tax,-95,false
+6,Net income,360,true
