@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>dchart — Query in. Publication-ready chart out.</title>
-<meta name="description" content="dchart is a local SQL editor and chart builder. It runs DuckDB in-process, draws with Vega-Lite and styles every chart for publication by default. One Linux binary, works offline, your data never leaves your machine.">
+<meta name="description" content="dchart is a local SQL editor and chart builder. It runs DuckDB in-process, draws with Vega-Lite and styles every chart for publication by default. One binary for Linux, macOS and Windows, works offline, your data never leaves your machine.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://cuiqanalytics.github.io/dchart/">
 <meta property="og:title" content="dchart — Query in. Publication-ready chart out.">
@@ -70,7 +70,7 @@
           <button class="copy" data-copy="dchart --folder ~/.local/lib/dchart/examples/data">Copy</button>
         </div>
       </div>
-      <p class="install-note">Free. One Linux binary (x86-64); on Windows, run it in WSL. No account, no telemetry, works offline. Then open <code>http://localhost:4322</code>.</p>
+      <p class="install-note">Free. Linux and macOS, x86-64 or arm64. On Windows, in PowerShell: <code>irm https://cuiqanalytics.github.io/dchart/install.ps1 | iex</code>. No account, no telemetry, works offline. Then open <code>http://localhost:4322</code>.</p>
     </div>
 
     <figure class="hero-shot">
@@ -245,7 +245,7 @@
   <section id="faq" class="wrap faq">
     <h2>Questions</h2>
     <div class="faq-list">
-      <details><summary>What do I need to run it?</summary><p>Linux on x86-64, or Windows with WSL, and a web browser. The install script puts dchart and its DuckDB library in <code>~/.local/lib/dchart</code> and links <code>~/.local/bin/dchart</code>. Nothing else to install.</p></details>
+      <details><summary>What do I need to run it?</summary><p>Linux or macOS (x86-64 or arm64) or Windows (x86-64), and a web browser. On Linux and macOS the install script puts dchart and its DuckDB library in <code>~/.local/lib/dchart</code> and links <code>~/.local/bin/dchart</code>; on Windows, <code>install.ps1</code> puts them in <code>%LOCALAPPDATA%\dchart</code> and adds it to your PATH. Nothing else to install.</p></details>
       <details><summary>Does it need internet access?</summary><p>No. The editor, Vega-Lite and DuckDB are all inside the download. The only exception is a DuckDB extension you install yourself, such as <code>INSTALL excel;</code> for Excel export.</p></details>
       <details><summary>Where are my charts saved?</summary><p>In <code>~/.config/dchart/charts.json</code>, or under <code>DCHART_CONFIG_DIR</code> if you set it. Export them all to one file to share them or move them to another machine.</p></details>
       <details><summary>Can I keep my tables between sessions?</summary><p>Yes. Start dchart with <code>--db file.duckdb</code> and the tables you create are saved in that file. Without it, DuckDB runs in memory and your files are only read.</p></details>
@@ -260,7 +260,7 @@
   <div class="wrap footer-grid">
     <div>
       <p class="brand"><img src="brand/icon-dchart.svg" alt="" width="28" height="28">dchart</p>
-      <p class="footer-note">A local SQL editor and chart builder. Linux binary.</p>
+      <p class="footer-note">A local SQL editor and chart builder. Linux, macOS and Windows.</p>
     </div>
     <div class="cmd">
       <code><span class="sigil" aria-hidden="true">$</span>curl -fsSL https://cuiqanalytics.github.io/dchart/install.sh | sh</code>

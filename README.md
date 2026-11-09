@@ -16,14 +16,24 @@ dchart --folder ~/.local/lib/dchart/examples/data
 ---
 
 ## Install
-Linux on x86-64. On Windows, run it in WSL.
+Linux and macOS (x86-64 or Apple silicon/arm64):
 
 ```bash
 curl -fsSL https://cuiqanalytics.github.io/dchart/install.sh | sh
 ```
 
 The script puts dchart, its DuckDB library and the examples in `~/.local/lib/dchart`, and
-links `~/.local/bin/dchart`. Run it again to upgrade. No root, no account, no telemetry.
+links `~/.local/bin/dchart`.
+
+Windows (x86-64), in PowerShell:
+
+```powershell
+irm https://cuiqanalytics.github.io/dchart/install.ps1 | iex
+```
+
+That installs to `%LOCALAPPDATA%\dchart` and adds it to your PATH. Run either script again
+to upgrade. No admin rights, no account, no telemetry. You can also download an archive for
+your platform from the [releases page](https://github.com/cuiqanalytics/dchart/releases).
 
 ## Quick start
 ```bash
