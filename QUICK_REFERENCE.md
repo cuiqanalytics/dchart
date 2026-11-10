@@ -7,7 +7,7 @@
 | `-d`, `--db FILE` | Open or create a DuckDB database file, so tables you create are kept. Default: in memory |
 | `-p`, `--port N` | Port to listen on. Default: 4322 |
 | `-v`, `--version` | Print the version |
-| `DCHART_CONFIG_DIR` | Where `charts.json` lives. Default: `~/.config/dchart` |
+| `DCHART_CONFIG_DIR` | Where `charts.json` lives. Default: `~/.config/dchart` (Linux), `~/Library/Application Support/dchart` (macOS), `%APPDATA%\dchart` (Windows) |
 
 ## Keyboard shortcuts
 Cmd replaces Ctrl on a Mac. Press `?` in the app for this list.

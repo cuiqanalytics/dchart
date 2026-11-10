@@ -22,7 +22,8 @@
         box.dataset.touched = '1'; select(next); next.focus();
       });
     });
-    if (box.matches('.install') && /Mac|Win/.test(navigator.platform || '')) select(tabs[1]);
+    // install box: show the Windows command to Windows visitors (tabs: macOS & Linux, Windows)
+    if (box.matches('.install') && /Win/.test(navigator.userAgentData?.platform || navigator.platform || '')) select(tabs[1]);
   });
 
   // Hero: alternate between the first crawl and the cached re-run until the visitor picks one.

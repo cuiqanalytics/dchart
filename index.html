@@ -60,17 +60,33 @@
       <h1>Query in. <em>Publication-ready</em> chart out.</h1>
       <p class="lede">dchart is a SQL editor and chart builder that runs in your browser, on your machine. Write a query against your CSV, Parquet and JSON files, then pick one of 14 chart types. The chart comes out styled for a report or a paper: a proper title, quiet gridlines and labels you can read. DuckDB runs inside the binary, so there's no database to set up and nothing leaves your laptop.</p>
 
-      <div id="install" class="install">
-        <div class="cmd">
-          <code><span class="sigil" aria-hidden="true">$</span>curl -fsSL https://cuiqanalytics.github.io/dchart/install.sh | sh</code>
-          <button class="copy" data-copy="curl -fsSL https://cuiqanalytics.github.io/dchart/install.sh | sh">Copy</button>
+      <div id="install" class="install" data-tabs>
+        <div class="tabs" role="tablist" aria-label="Operating system">
+          <button role="tab" id="tab-unix" aria-controls="pane-unix" aria-selected="true">macOS &amp; Linux</button>
+          <button role="tab" id="tab-win" aria-controls="pane-win" aria-selected="false" tabindex="-1">Windows</button>
         </div>
-        <div class="cmd">
-          <code><span class="sigil" aria-hidden="true">$</span>dchart --folder ~/.local/lib/dchart/examples/data</code>
-          <button class="copy" data-copy="dchart --folder ~/.local/lib/dchart/examples/data">Copy</button>
+        <div role="tabpanel" id="pane-unix" aria-labelledby="tab-unix" class="install-pane">
+          <div class="cmd">
+            <code><span class="sigil" aria-hidden="true">$</span>curl -fsSL https://cuiqanalytics.github.io/dchart/install.sh | sh</code>
+            <button class="copy" data-copy="curl -fsSL https://cuiqanalytics.github.io/dchart/install.sh | sh">Copy</button>
+          </div>
+          <div class="cmd">
+            <code><span class="sigil" aria-hidden="true">$</span>dchart --folder ~/.local/lib/dchart/examples/data</code>
+            <button class="copy" data-copy="dchart --folder ~/.local/lib/dchart/examples/data">Copy</button>
+          </div>
+        </div>
+        <div role="tabpanel" id="pane-win" aria-labelledby="tab-win" class="install-pane" hidden>
+          <div class="cmd">
+            <code><span class="sigil" aria-hidden="true">&gt;</span>irm https://cuiqanalytics.github.io/dchart/install.ps1 | iex</code>
+            <button class="copy" data-copy="irm https://cuiqanalytics.github.io/dchart/install.ps1 | iex">Copy</button>
+          </div>
+          <div class="cmd">
+            <code><span class="sigil" aria-hidden="true">&gt;</span>dchart --folder $env:LOCALAPPDATA\dchart\examples\data</code>
+            <button class="copy" data-copy="dchart --folder $env:LOCALAPPDATA\dchart\examples\data">Copy</button>
+          </div>
         </div>
       </div>
-      <p class="install-note">Free. Linux and macOS, x86-64 or arm64. On Windows, in PowerShell: <code>irm https://cuiqanalytics.github.io/dchart/install.ps1 | iex</code>. No account, no telemetry, works offline. Then open <code>http://localhost:4322</code>.</p>
+      <p class="install-note">Free. macOS and Linux on Apple silicon, arm64 or x86-64; Windows on x86-64, in PowerShell. No admin rights, no account, no telemetry, works offline. Then open <code>http://localhost:4322</code>. Prefer to install by hand? Download an archive from the <a href="https://github.com/cuiqanalytics/dchart/releases/latest">latest release</a>.</p>
     </div>
 
     <figure class="hero-shot">
@@ -245,9 +261,11 @@
   <section id="faq" class="wrap faq">
     <h2>Questions</h2>
     <div class="faq-list">
-      <details><summary>What do I need to run it?</summary><p>Linux or macOS (x86-64 or arm64) or Windows (x86-64), and a web browser. On Linux and macOS the install script puts dchart and its DuckDB library in <code>~/.local/lib/dchart</code> and links <code>~/.local/bin/dchart</code>; on Windows, <code>install.ps1</code> puts them in <code>%LOCALAPPDATA%\dchart</code> and adds it to your PATH. Nothing else to install.</p></details>
+      <details><summary>What do I need to run it?</summary><p>macOS or Linux (Apple silicon, arm64 or x86-64) or Windows (x86-64), and a web browser. On macOS and Linux, <code>install.sh</code> puts dchart, its DuckDB library and the examples in <code>~/.local/lib/dchart</code> and links <code>~/.local/bin/dchart</code>. On Windows, <code>install.ps1</code> puts them in <code>%LOCALAPPDATA%\dchart</code> and adds that folder to your PATH. Neither needs admin rights, and there is nothing else to install.</p></details>
+      <details><summary>How do I upgrade or uninstall?</summary><p>To upgrade, run the install command again: it replaces the old version with the latest release. To uninstall on macOS or Linux, run <code>rm -rf ~/.local/lib/dchart ~/.local/bin/dchart</code>. On Windows, delete <code>%LOCALAPPDATA%\dchart</code> and remove it from your user PATH (Settings → System → About → Advanced system settings → Environment Variables). Your saved charts are kept either way.</p></details>
+      <details><summary>Can I install it by hand?</summary><p>Yes. Download the archive for your platform from the <a href="https://github.com/cuiqanalytics/dchart/releases/latest">latest release</a>, check it against <code>SHA256SUMS</code>, unpack it anywhere and run <code>dchart</code> from that folder. Keep the DuckDB library next to it: dchart looks for it there. On macOS, a browser download is quarantined, so clear that first: <code>xattr -dr com.apple.quarantine dchart-cli-macos-*</code>.</p></details>
       <details><summary>Does it need internet access?</summary><p>No. The editor, Vega-Lite and DuckDB are all inside the download. The only exception is a DuckDB extension you install yourself, such as <code>INSTALL excel;</code> for Excel export.</p></details>
-      <details><summary>Where are my charts saved?</summary><p>In <code>~/.config/dchart/charts.json</code>, or under <code>DCHART_CONFIG_DIR</code> if you set it. Export them all to one file to share them or move them to another machine.</p></details>
+      <details><summary>Where are my charts saved?</summary><p>In <code>charts.json</code> in your config folder: <code>~/.config/dchart</code> on Linux, <code>~/Library/Application Support/dchart</code> on macOS and <code>%APPDATA%\dchart</code> on Windows. Set <code>DCHART_CONFIG_DIR</code> to use another folder. Export them all to one file to share them or move them to another machine.</p></details>
       <details><summary>Can I keep my tables between sessions?</summary><p>Yes. Start dchart with <code>--db file.duckdb</code> and the tables you create are saved in that file. Without it, DuckDB runs in memory and your files are only read.</p></details>
       <details><summary>How does it relate to asql?</summary><p>They work together. dchart is for exploring one chart at a time, interactively. asql builds a whole report from an annotated <code>.sql</code> file. Copy a dchart chart as an asql block and paste it into the report.</p></details>
       <details><summary>Can I go beyond the builder?</summary><p>Yes. The JSON view shows the Vega-Lite spec behind every chart. Edit it and apply it as a custom spec, with the full Vega-Lite grammar available.</p></details>
@@ -262,14 +280,21 @@
       <p class="brand"><img src="brand/icon-dchart.svg" alt="" width="28" height="28">dchart</p>
       <p class="footer-note">A local SQL editor and chart builder. Linux, macOS and Windows.</p>
     </div>
-    <div class="cmd">
-      <code><span class="sigil" aria-hidden="true">$</span>curl -fsSL https://cuiqanalytics.github.io/dchart/install.sh | sh</code>
-      <button class="copy" data-copy="curl -fsSL https://cuiqanalytics.github.io/dchart/install.sh | sh">Copy</button>
+    <div class="footer-install">
+      <div class="cmd">
+        <code><span class="sigil" aria-hidden="true">$</span>curl -fsSL https://cuiqanalytics.github.io/dchart/install.sh | sh</code>
+        <button class="copy" data-copy="curl -fsSL https://cuiqanalytics.github.io/dchart/install.sh | sh">Copy</button>
+      </div>
+      <div class="cmd">
+        <code><span class="sigil" aria-hidden="true">&gt;</span>irm https://cuiqanalytics.github.io/dchart/install.ps1 | iex</code>
+        <button class="copy" data-copy="irm https://cuiqanalytics.github.io/dchart/install.ps1 | iex">Copy</button>
+      </div>
     </div>
     <nav class="footer-links" aria-label="Resources">
       <a href="https://github.com/cuiqanalytics/dchart">GitHub</a>
       <a href="https://github.com/cuiqanalytics/dchart#readme">README</a>
       <a href="https://github.com/cuiqanalytics/dchart/blob/main/QUICK_REFERENCE.md">Quick reference</a>
+      <a href="https://github.com/cuiqanalytics/dchart/releases/latest">Downloads</a>
       <a href="https://github.com/cuiqanalytics/dchart/tree/main/examples">Examples</a>
       <a href="https://github.com/cuiqanalytics/dchart/blob/main/LICENSE">License</a>
     </nav>

@@ -7,6 +7,10 @@
 .lede { margin-top: 28px; font-size: clamp(18px, 1.6vw, 20px); color: var(--muted); max-width: 54ch; }
 .install { margin-top: 34px; max-width: 620px; display: grid; gap: 10px; }
 .install-note { margin-top: 12px; font-size: 14px; color: var(--muted); }
+.install .tabs { margin-bottom: 2px; }
+.install-pane { display: grid; gap: 10px; }
+.install-pane[hidden] { display: none; }
+.footer-install { display: grid; gap: 8px; min-width: 0; }
 .hero-shot { margin: 0; }
 .hero-shot img { width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); box-shadow: 0 30px 70px -30px #16182b55; background: #fff; }
 .hero-shot figcaption { margin-top: 12px; font-size: 14px; color: var(--muted); }
@@ -52,9 +56,9 @@
 /* ---------- gallery ---------- */
 .gallery { margin: 36px 0 0; }
 .tabs { display: flex; flex-wrap: wrap; gap: 6px; }
-.gallery .tabs [role="tab"] { font: 600 14px var(--display); color: var(--muted); background: transparent; border: 1px solid var(--line);
+.gallery .tabs [role="tab"], .install .tabs [role="tab"] { font: 600 14px var(--display); color: var(--muted); background: transparent; border: 1px solid var(--line);
   padding: 7px 14px; border-radius: 999px; cursor: pointer; }
-.gallery .tabs [role="tab"][aria-selected="true"] { color: var(--text); border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.gallery .tabs [role="tab"][aria-selected="true"], .install .tabs [role="tab"][aria-selected="true"] { color: var(--text); border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
 .gallery [role="tabpanel"] { margin-top: 18px; }
 .gallery img { width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); background: #fff; }
 .gallery p { margin-top: 12px; font-size: 15px; color: var(--muted); max-width: 70ch; }
